@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 
+[System.Serializable]
 public class Motor
 {
-    public Rigidbody rb;
+    private Rigidbody rb;
     public Transform[] groundCheckers;
     public Vector3 groundOffsetVector;
     public LayerMask groundLayer;
 
-    //at the beginning of fixed update in stats we'll use isGrounded and store the return in grounded
-    private bool grounded;
+    //at the beginning of fixed update in actor we'll use isGrounded and store the return in grounded
+    public bool grounded;
 
     public Motor(Rigidbody rigid)
             { rb = rigid; }
@@ -38,6 +39,16 @@ public class Motor
         return false;
     }
 
+    public void Update()
+    {
+
+    }
+
     //jump stuff later
+
+    public void DoJump()
+    {
+        
+    }
 }
 

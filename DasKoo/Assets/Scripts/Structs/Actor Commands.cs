@@ -1,13 +1,15 @@
-﻿public struct ActorCommands
+﻿using UnityEngine;
+public struct ActorCommands
 {
-    float value; //-1 to 1
-    enum CommandType
+    public Vector2 value; //-1 to 1
+    public enum CommandType
     {
-        VERTICAL_MOVEMENT = 1,
-        HORIZONTAL_MOVEMENT = 2,
+        NONE = 0,
+        //HORIZONTAL_MOVEMENT = 1,
+        //VERTICAL_MOVEMENT = 2,
         JUMP = 3,
         ATTACK = 4,
-        SKILL = 5
+        SKILL = 5 
     }
-    CommandType type;
+    public CommandType type;
 }
