@@ -3,7 +3,7 @@
 [System.Serializable]
 public class Motor
 {
-    private Rigidbody rb;
+    public Rigidbody rb;
     public Transform[] groundCheckers;
     public Vector3 groundOffsetVector;
     public LayerMask groundLayer;
@@ -19,18 +19,19 @@ public class Motor
         Vector3 target = rb.transform.TransformDirection(new Vector3(input.x, 0, input.y) * speed);
         Vector3 velocity = rb.velocity;
         Vector3 changeInVelocity = target - velocity;
-
         changeInVelocity.x = Mathf.Clamp(changeInVelocity.x, -acc, acc);
         changeInVelocity.z = Mathf.Clamp(changeInVelocity.z, -acc, acc);
-
-        rb.AddForce(changeInVelocity, ForceMode.VelocityChange);
+        //force mode is the slow fall speed issue
+        rb.AddForce(changeInVelocity/*, ForceMode.VelocityChange*/);
         rb.velocity = new Vector3(rb.velocity.x, velocity.y, rb.velocity.z);
+
     }
 
     public bool IsGrounded()
     {
         foreach(Transform t in groundCheckers)
         {
+            //Debug.DrawLine(t.position, t.position + groundOffsetVector, Color.magenta);
             if (Physics.Linecast(t.position, t.position + groundOffsetVector, groundLayer))
             {
                 return true;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Actor : MonoBehaviour
 {
     public int numberOfPreviousInputs;
@@ -23,11 +24,11 @@ public class Actor : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        actorStats = new ActorStats();
-        _motor = new Motor(rb);
+        //actorStats = new ActorStats();
+        _motor.rb = rb;
         _controller = new Controller(this);
         
-        _motor.groundCheckers = GetComponentsInChildren<Transform>();
+        //_motor.groundCheckers = GetComponentsInChildren<Transform>();
     }
 
     void Update()
@@ -41,9 +42,9 @@ public class Actor : MonoBehaviour
     void FixedUpdate()
     {
         //↓ broken
-        //motor.grounded = motor.IsGrounded();
+        motor.grounded = motor.IsGrounded();
         //for jumping
-        //motor.Update();
+        motor.Update();
         GrabInputs();
     }
 
