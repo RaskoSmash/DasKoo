@@ -27,7 +27,8 @@ public class Actor : MonoBehaviour
         //actorStats = new ActorStats();
         _motor.rb = rb;
         _controller = new Controller(this);
-        
+        _motor.SetGravity(-(2 * _motor.jumpHeight) / Mathf.Pow(_motor.timeToJumpApex, 2));
+        _motor.SetJumpVelocity(Mathf.Abs(_motor.GetGravity()) * _motor.timeToJumpApex);
         //_motor.groundCheckers = GetComponentsInChildren<Transform>();
     }
 
@@ -42,10 +43,10 @@ public class Actor : MonoBehaviour
     void FixedUpdate()
     {
         //↓ broken
-        motor.grounded = motor.IsGrounded();
         //for jumping
-        motor.Update();
+        motor.grounded = motor.IsGrounded();
         GrabInputs();
+        motor.Update();
     }
 
     void GrabInputs()
@@ -61,7 +62,7 @@ public class Actor : MonoBehaviour
                     break;
                 case ActorCommands.CommandType.JUMP:
                     //do jump
-                    Debug.Log("Me jump");
+                    motor.DoJump();
                     break;
                 case ActorCommands.CommandType.SKILL:
                     //do skill
@@ -72,7 +73,11 @@ public class Actor : MonoBehaviour
                     break;
             }
             //motor.move is fine, the 10s will be replaced with stats
-            motor.Move(controller.GetCurrentFrameInput()[0].value, actorStats.moveSpeed, actorStats.moveAccel);
+
+            if (controller.GetCurrentFrameInput()[0].value != new Vector2(0, 0))
+            {
+                motor.Move(controller.GetCurrentFrameInput()[0].value, actorStats.moveSpeed, actorStats.moveAccel);
+            }
         }
 
     }

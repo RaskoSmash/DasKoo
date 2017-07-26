@@ -173,21 +173,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!4 &59992520 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4797411584301974, guid: 21a60f2db6dee9344b3ce6cdf7ba08b1,
-    type: 2}
-  m_PrefabInternal: {fileID: 843032602}
---- !u!4 &183061912 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4244253043366018, guid: 21a60f2db6dee9344b3ce6cdf7ba08b1,
-    type: 2}
-  m_PrefabInternal: {fileID: 843032602}
---- !u!4 &216568491 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4872050594794510, guid: 21a60f2db6dee9344b3ce6cdf7ba08b1,
-    type: 2}
-  m_PrefabInternal: {fileID: 843032602}
 --- !u!1 &672201137
 GameObject:
   m_ObjectHideFlags: 0
@@ -279,18 +264,13 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114815088364027104, guid: 21a60f2db6dee9344b3ce6cdf7ba08b1,
-        type: 2}
-      propertyPath: _motor.groundCheckers.Array.size
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 4804390020027170, guid: 21a60f2db6dee9344b3ce6cdf7ba08b1, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4804390020027170, guid: 21a60f2db6dee9344b3ce6cdf7ba08b1, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 7.58267
+      value: 25.07
       objectReference: {fileID: 0}
     - target: {fileID: 4804390020027170, guid: 21a60f2db6dee9344b3ce6cdf7ba08b1, type: 2}
       propertyPath: m_LocalPosition.z
@@ -315,61 +295,6 @@ Prefab:
     - target: {fileID: 4804390020027170, guid: 21a60f2db6dee9344b3ce6cdf7ba08b1, type: 2}
       propertyPath: m_RootOrder
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114815088364027104, guid: 21a60f2db6dee9344b3ce6cdf7ba08b1,
-        type: 2}
-      propertyPath: id
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114815088364027104, guid: 21a60f2db6dee9344b3ce6cdf7ba08b1,
-        type: 2}
-      propertyPath: actorStats.moveSpeed
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 114815088364027104, guid: 21a60f2db6dee9344b3ce6cdf7ba08b1,
-        type: 2}
-      propertyPath: actorStats.moveAccel
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 114815088364027104, guid: 21a60f2db6dee9344b3ce6cdf7ba08b1,
-        type: 2}
-      propertyPath: _motor.grounded
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114815088364027104, guid: 21a60f2db6dee9344b3ce6cdf7ba08b1,
-        type: 2}
-      propertyPath: _motor.groundCheckers.Array.data[0]
-      value: 
-      objectReference: {fileID: 1776914092}
-    - target: {fileID: 114815088364027104, guid: 21a60f2db6dee9344b3ce6cdf7ba08b1,
-        type: 2}
-      propertyPath: _motor.groundCheckers.Array.data[1]
-      value: 
-      objectReference: {fileID: 59992520}
-    - target: {fileID: 114815088364027104, guid: 21a60f2db6dee9344b3ce6cdf7ba08b1,
-        type: 2}
-      propertyPath: _motor.groundCheckers.Array.data[2]
-      value: 
-      objectReference: {fileID: 216568491}
-    - target: {fileID: 114815088364027104, guid: 21a60f2db6dee9344b3ce6cdf7ba08b1,
-        type: 2}
-      propertyPath: _motor.groundCheckers.Array.data[3]
-      value: 
-      objectReference: {fileID: 183061912}
-    - target: {fileID: 114815088364027104, guid: 21a60f2db6dee9344b3ce6cdf7ba08b1,
-        type: 2}
-      propertyPath: _motor.groundOffsetVector.y
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 54083848395971756, guid: 21a60f2db6dee9344b3ce6cdf7ba08b1,
-        type: 2}
-      propertyPath: m_Mass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114815088364027104, guid: 21a60f2db6dee9344b3ce6cdf7ba08b1,
-        type: 2}
-      propertyPath: _motor.groundLayer.m_Bits
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 21a60f2db6dee9344b3ce6cdf7ba08b1, type: 2}
@@ -463,8 +388,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
---- !u!4 &1776914092 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4451406656350614, guid: 21a60f2db6dee9344b3ce6cdf7ba08b1,
-    type: 2}
-  m_PrefabInternal: {fileID: 843032602}
