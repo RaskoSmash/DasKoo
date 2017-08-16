@@ -14,32 +14,30 @@ public class Motor
     #region Jump stats
     public bool isJump;
     public float jumpsquat;
-    public float jumpHeight;
+    public float maxJumpHeight;
     public float timeToJumpApex;
+    public float minJumpHeight;
     #endregion
 
     private float gravity;
-    private float jumpVelocity;
-
+    private float maxJumpVelocity;
+    private float minJumpVelocity;
+    public bool jumpReleased;
     public Motor(Rigidbody rigid)
     { rb = rigid; }
 
     public void Move(Vector2 input, float speed, float acc)
     {
-        Vector3 target = rb.transform.TransformDirection(new Vector3(input.x, 0, input.y) * speed);
+        Vector3 target = new Vector3(input.x, 0, input.y) * speed;
         Vector3 velocity = rb.velocity;
         Vector3 changeInVelocity = target - velocity;
 
         changeInVelocity.x = Mathf.Clamp(changeInVelocity.x, -acc, acc);
         changeInVelocity.z = Mathf.Clamp(changeInVelocity.z, -acc, acc);
+        changeInVelocity.y = 0;
 
-        rb.AddForce(changeInVelocity, ForceMode.VelocityChange);
-        rb.velocity = new Vector3(rb.velocity.x, velocity.y, rb.velocity.z);
+        rb.AddForce(changeInVelocity, ForceMode.Impulse);
 
-        //Vector3 vel = rb.velocity;
-        //Vector3 target = new Vector3(input.x, 0, input.y) * speed;
-        //rb.AddForce(target);
-        //rb.velocity = new Vector3(rb.velocity.x, vel.y, rb.velocity.z);
     }
 
     public bool IsGrounded()
@@ -57,9 +55,19 @@ public class Motor
 
     public void Update()
     {
-        if (!grounded)
-        {
+        //if (!grounded)
+        //{
             rb.velocity += new Vector3(0, gravity * Time.deltaTime, 0);
+        //}
+        if(jumpReleased)
+        {
+            //find a better way later
+            if (rb.velocity.y > minJumpVelocity)
+            {
+                Vector3 vel = rb.velocity;
+                rb.velocity = new Vector3(vel.x, minJumpVelocity, vel.z);
+            }
+            jumpReleased = false;
         }
     }
 
@@ -72,7 +80,7 @@ public class Motor
         Vector3 vel = rb.velocity;
 
         //rb.AddForce(new Vector3(0, jumpVelocity, 0));
-        rb.velocity = new Vector3(vel.x, jumpVelocity, vel.z);
+        rb.velocity = new Vector3(vel.x, maxJumpVelocity, vel.z);
     }
 
     public void SetGravity(float newGravity)
@@ -85,14 +93,24 @@ public class Motor
         return gravity;
     }
 
-    public void SetJumpVelocity(float newJumpVelocity)
+    public void SetMaxJumpVelocity(float newJumpVelocity)
     {
-        jumpVelocity = newJumpVelocity;
+        maxJumpVelocity = newJumpVelocity;
     }
 
-    public float GetJumpVelocity()
+    public float GetMaxJumpVelocity()
     {
-        return jumpVelocity;
+        return maxJumpVelocity;
+    }
+
+    public void SetMinJumpVelocity(float newJumpVelocity)
+    {
+        minJumpVelocity = newJumpVelocity;
+    }
+
+    public float GetMinJumpVelocity()
+    {
+        return minJumpVelocity;
     }
 }
 

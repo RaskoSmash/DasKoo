@@ -7,6 +7,7 @@ public class Controller
     public Actor _actor;
     private List<ActorCommands> queueInput;
     private List<ActorCommands> currentFrameInput;
+    public bool canSetInput = true;
 
     public Controller(Actor actor)
     {

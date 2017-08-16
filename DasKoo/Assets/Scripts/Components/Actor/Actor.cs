@@ -21,14 +21,23 @@ public class Actor : MonoBehaviour
     { get { return _controller; } }
 
     public ActorStats actorStats;
+
+    public bool isSprinting;
+
+    public float turnSmoothTime;
+    float turnSmoothVelocity;
+
+    public bool isHuman;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         //actorStats = new ActorStats();
         _motor.rb = rb;
         _controller = new Controller(this);
-        _motor.SetGravity(-(2 * _motor.jumpHeight) / Mathf.Pow(_motor.timeToJumpApex, 2));
-        _motor.SetJumpVelocity(Mathf.Abs(_motor.GetGravity()) * _motor.timeToJumpApex);
+        //change these to getter setters later
+        _motor.SetGravity(-(2 * _motor.maxJumpHeight) / Mathf.Pow(_motor.timeToJumpApex, 2));
+        _motor.SetMaxJumpVelocity(Mathf.Abs(_motor.GetGravity()) * _motor.timeToJumpApex);
+        _motor.SetMinJumpVelocity(Mathf.Sqrt(2 * Mathf.Abs(_motor.GetGravity()) * _motor.minJumpHeight));
         //_motor.groundCheckers = GetComponentsInChildren<Transform>();
     }
 
@@ -45,14 +54,15 @@ public class Actor : MonoBehaviour
         //↓ broken
         //for jumping
         motor.grounded = motor.IsGrounded();
-        GrabInputs();
+        UseInputs();
+       
         motor.Update();
     }
 
-    void GrabInputs()
+    void UseInputs()
     {
         //need to transfer the Actor commands into inputs in here
-        if (controller != null && controller.GetCurrentFrameInput().Count > 0)
+        if (controller != null && controller.GetCurrentFrameInput().Count > 0 && controller.canSetInput)
         {
             //need to change [0] if i want to use a list size > 1
             switch (controller.GetCurrentFrameInput()[0].type)
@@ -72,13 +82,27 @@ public class Actor : MonoBehaviour
                     //leave switch
                     break;
             }
-            //motor.move is fine, the 10s will be replaced with stats
 
-            if (controller.GetCurrentFrameInput()[0].value != new Vector2(0, 0))
+            if (controller.GetCurrentFrameInput()[0].value != Vector2.zero)
             {
-                motor.Move(controller.GetCurrentFrameInput()[0].value, actorStats.moveSpeed, actorStats.moveAccel);
+                //add acceleration and decceleration after sprint is pressed/released
+                Turn(controller.GetCurrentFrameInput()[0].value);
+
+                if (!isSprinting)
+                    motor.Move(controller.GetCurrentFrameInput()[0].value, actorStats.walkSpeed, actorStats.moveAccel);
+                else
+                    motor.Move(controller.GetCurrentFrameInput()[0].value, actorStats.runSpeed, actorStats.moveAccel);
             }
         }
 
+    }
+
+    void Turn(Vector2 turnVec)
+    {
+        //find a way to do it without camera
+        float targetRotation = 0;
+        targetRotation = Mathf.Atan2(turnVec.x, turnVec.y) * Mathf.Rad2Deg;
+        transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y,
+            targetRotation, ref turnSmoothVelocity, turnSmoothTime);
     }
 }

@@ -5,6 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public struct ActorStats
 {
-    public float moveSpeed, moveAccel;
+    public float walkSpeed, moveAccel, runSpeed;
     public Vector3 groundedJumpVelocity, aerialJumpVelocity;
 }

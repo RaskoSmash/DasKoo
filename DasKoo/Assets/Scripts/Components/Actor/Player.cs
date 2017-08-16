@@ -4,30 +4,53 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
-    private Vector2 movement;
+    //Global orientation
+    private Vector3 movement;
     private bool attack;
     private ActorCommands input;
     private Controller con;
-    private bool jump;
+    public Transform cameraT;
 
     void Start()
     {
         con = GetComponent<Actor>().controller;
+        if (con != null)
+            con.canSetInput = true;
     }
 
     void Update()
     {
         input.type = ActorCommands.CommandType.NONE;
-        movement.x = Input.GetAxis("Horizontal");
-        movement.y = Input.GetAxis("Vertical");
-        input.value = movement;
+        input.value.x = Input.GetAxis("Horizontal");
+        input.value.y = Input.GetAxis("Vertical");
+        movement = new Vector3(input.value.x, 0, input.value.y);
+
+        movement = cameraT.transform.TransformDirection(movement);
+        movement.y = 0;
+
+        input.value = new Vector2(movement.x, movement.z);
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            input.type = ActorCommands.CommandType.SKILL;
+        }
 
         if (Input.GetKeyDown("space"))
         {
             input.type = ActorCommands.CommandType.JUMP;
         }
-
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            con._actor.motor.jumpReleased = true;
+        }
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            con._actor.isSprinting = true;
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            con._actor.isSprinting = false;
+        }
         if (con != null)
         {
             con.SetInput(input);
@@ -35,6 +58,8 @@ public class Player : MonoBehaviour
         else
         {
             con = GetComponent<Actor>().controller;
+            if (con != null)
+                con.canSetInput = true;
         }
     }
 }
