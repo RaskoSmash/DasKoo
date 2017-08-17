@@ -20,6 +20,7 @@ public class AirdashSkill : MonoBehaviour
 
     void Update()
     {
+        //add deacceleration after airdash
         //just for testing right now
         if (con != null && con.GetCurrentFrameInput().Count > 0 && con.canSetInput && cooldown <= 0 && 
             con.GetCurrentFrameInput()[0].type == ActorCommands.CommandType.SKILL && !con._actor.motor.grounded)
