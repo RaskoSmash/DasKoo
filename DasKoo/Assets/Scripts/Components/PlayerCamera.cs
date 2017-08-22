@@ -21,10 +21,15 @@ public class PlayerCamera : MonoBehaviour
     //
     void Start()
     {
-        cameraOffset = Vector3.Normalize(target.transform.position - transform.position);
+        //cameraOffset = Vector3.Normalize(target.transform.position - transform.position);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         cameraZoom = prevCameraZoom = offsetDis;
+        if(target == null)
+        {
+            //i dont like this method
+            target = GameObject.FindGameObjectWithTag("Player").transform;
+        }
     }
 
     void Update()
@@ -55,7 +60,12 @@ public class PlayerCamera : MonoBehaviour
 
         //rotate at hotdog's position
         //transform.position = offset * offsetDis;
+        if(target != null)
+            transform.position = (target.position + new Vector3(0, targetLookOffsetY)) - transform.forward * cameraZoom;
+    }
 
-        transform.position = (target.position + new Vector3(0, targetLookOffsetY)) - transform.forward * cameraZoom;
+    public void SetTarget(Transform _target)
+    {
+        target = _target;
     }
 }

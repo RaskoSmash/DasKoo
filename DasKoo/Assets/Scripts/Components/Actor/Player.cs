@@ -16,6 +16,10 @@ public class Player : MonoBehaviour
         con = GetComponent<Actor>().controller;
         if (con != null)
             con.canSetInput = true;
+        if(cameraT == null)
+        {
+            cameraT = Camera.main.transform;
+        }
     }
 
     void Update()

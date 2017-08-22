@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public GameObject stage;
     public GameObject[] players;
-
+    public PlayerCamera[] cameras;
     //Static instance of GameManager which allows it to be accessed by any other script.
     public static GameManager instance = null;              
     private int curStageNum = 3;
@@ -30,7 +30,20 @@ public class GameManager : MonoBehaviour
     //Initializes the game for each level.
     void InitGame()
     {
-        
+        for(int i = 0; i < players.Length; ++i)
+        {
+            if(players[i] != null)
+            {
+                Instantiate(players[i]);
+            }
+        }
+        if(stage != null)
+        {
+            Instantiate(stage);
+        }
+        //need to make it target clone in the hierarchy 
+        //PlayerCamera cam = stage.GetComponentInChildren<PlayerCamera>();
+        //cam.SetTarget(players[0].transform);
     }
 
 }

@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 114859189428652208}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -352,9 +352,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   airdashDir: {x: 0, y: 0, z: 0}
-  maxInputTimer: 0.75
+  maxInputTimer: 0.4
   cooldown: 0
-  maxCooldown: 1
+  maxCooldown: 2
 --- !u!135 &135953391612824626
 SphereCollider:
   m_ObjectHideFlags: 1
