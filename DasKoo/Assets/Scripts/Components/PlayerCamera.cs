@@ -64,11 +64,6 @@ public class PlayerCamera : MonoBehaviour
         //transform.position = offset * offsetDis;
         if (target != null)
         {
-            //RaycastHit ray = CheckForCollision(target.position, transform.position);
-            //if(ray.point != Vector3.zero)
-            //{
-            //    transform.position = new Vector3(ray.point.x, transform.position.y, ray.point.z);
-            //}
             DoCollision();
             transform.position = (target.position + new Vector3(0, targetLookOffsetY)) - transform.forward * cameraZoom;
         }
@@ -80,17 +75,17 @@ public class PlayerCamera : MonoBehaviour
         target = _target;
     }
 
-    private RaycastHit CheckForCollision(Vector3 from, Vector3 to)
-    {
-        RaycastHit wallHit = new RaycastHit();
-        Debug.DrawLine(from, to, Color.cyan);
-        if (Physics.Linecast(from, to, out wallHit))
-        {
-            Debug.DrawLine(wallHit.point, (wallHit.point + wallHit.normal), Color.red);
-            return wallHit;
-        }
-        return new RaycastHit();
-    }
+    //private RaycastHit CheckForCollision(Vector3 from, Vector3 to)
+    //{
+    //    RaycastHit wallHit = new RaycastHit();
+    //    Debug.DrawLine(from, to, Color.cyan);
+    //    if (Physics.Linecast(from, to, out wallHit))
+    //    {
+    //        Debug.DrawLine(wallHit.point, (wallHit.point + wallHit.normal), Color.red);
+    //        return wallHit;
+    //    }
+    //    return new RaycastHit();
+    //}
 
     private void DoCollision()
     {
@@ -100,28 +95,20 @@ public class PlayerCamera : MonoBehaviour
         upperRight = myCamera.ScreenToWorldPoint(new Vector3(myCamera.pixelWidth, myCamera.pixelHeight, myCamera.nearClipPlane));
 
         RaycastHit ray = new RaycastHit();
-        if(Physics.Linecast(target.position, transform.position, out ray))
+        if (Physics.Linecast(target.position, transform.position, out ray))
         {
-            //transform.position = transform.position + (transform.forward * pushCameraDistance);
             float disFromTarget = Vector3.Magnitude(target.position - transform.position);
             cameraZoom -= disFromTarget - ray.distance;
         }
-        else if(Physics.Linecast(upperLeft, lowerLeft) || Physics.Linecast(lowerLeft, lowerRight) || Physics.Linecast(lowerRight, upperRight) || Physics.Linecast(upperRight, upperLeft))
+        else if (Physics.Linecast(upperLeft, lowerLeft) || Physics.Linecast(lowerLeft, lowerRight) || Physics.Linecast(lowerRight, upperRight) || Physics.Linecast(upperRight, upperLeft))
         {
             cameraZoom -= pushCameraDistance;
         }
-        Debug.DrawLine(target.position, transform.position, Color.cyan);
-        Debug.DrawLine(upperLeft, lowerLeft, Color.green);
-        Debug.DrawLine(lowerLeft, lowerRight, Color.green);
-        Debug.DrawLine(lowerRight, upperRight, Color.green);
-        Debug.DrawLine(upperRight, upperLeft, Color.green);
+
+        //Debug.DrawLine(target.position, transform.position, Color.cyan);
+        //Debug.DrawLine(upperLeft, lowerLeft, Color.green);
+        //Debug.DrawLine(lowerLeft, lowerRight, Color.green);
+        //Debug.DrawLine(lowerRight, upperRight, Color.green);
+        //Debug.DrawLine(upperRight, upperLeft, Color.green);
     }
-    //private void DrawBounds()
-    //{
-    //    Vector3 upperLeft = Vector3.zero, upperRight = upperLeft, lowerLeft = upperLeft, lowerRight = upperLeft;
-    //    upperLeft = myCamera.ScreenToWorldPoint(new Vector3(0, 0, 0));
-    //    upperRight = myCamera.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0));
-    //    Debug.DrawLine(upperLeft, upperRight, Color.green);
-    //}
-    //I have to be able to calculate a new camera zoom based on a new position
 }
