@@ -34,7 +34,6 @@ public class MusicScriptTest : MonoBehaviour
             Vector3 dis = (target.transform.position - transform.position);
             float mag = Mathf.Clamp(dis.magnitude, disVolume.keys[0].time, disVolume.keys[disVolume.keys.Length - 1].time);
             musicObj.volume = disVolume.Evaluate(mag);
-            Debug.Log(mag);
         }
     }
 }
